@@ -63,6 +63,10 @@ public class gameManager extends JPanel implements ActionListener
         
     	p1.draw(g);
     	p2.draw(g);
+    	Thread a = new Thread(p1);
+        Thread b = new Thread(p2);
+        a.start();
+        b.start();
 
    
  

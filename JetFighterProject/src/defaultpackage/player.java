@@ -11,10 +11,11 @@ public class player implements KeyListener, Runnable{
     private double x,y; 
     private int id;
     private double Deg = 0;
-    private double DegVel = 3;
-    private double velX = 2;
-    private double velY = 2;
+    private double DegVel = 1.5;
+    private double velX = 1;
+    private double velY = 1;
     JLabel label;
+    int key = -1;
     Image image = new ImageIcon(this.getClass().getResource("/plane.jpg")).getImage();
     
 
@@ -78,29 +79,40 @@ public class player implements KeyListener, Runnable{
 
    }
 
-    @Override
-    public void run() {  
+   @Override
+   public void run() {  
+       
+       if(id == 1)
+       {
+           if(key == KeyEvent.VK_RIGHT)
+           {
+               Deg += DegVel;
+           }
+           if(key == KeyEvent.VK_LEFT)
+           {
+               Deg -= DegVel;
+           }
+       }
+       if(id == 2)
+       {
 
-        
-        
-        // draw(gameManager.g);
-        // Graphics2D g2D = (Graphics2D) g;
-        // goingTheSameWay();
-        // g2D.rotate(Math.toRadians(Deg),(image.getWidth(label) / 2) + x ,(image.getHeight(label) / 2) + y);
-        // g2D.drawImage(image,(int)x,(int)y,null); 
-        // try{
-        //     while(true) 
-        //     {
-        //         goingTheSameWay();
-                
-        //         Thread.sleep(7);
-        //     }
-             
-        // } 
-        // catch(Exception e) {
-        //     System.err.println(e.getMessage());
-        // }
-    }
+           if(key == KeyEvent.VK_D)
+           {
+               Deg += DegVel;
+           }
+           if(key == KeyEvent.VK_A)
+           {
+               Deg -= DegVel;
+           }
+           try{
+               Thread.sleep(50);
+           }
+           catch(InterruptedException ie)
+           {
+               ie.printStackTrace();
+           }
+       }
+   }
  
  public void goingTheSameWay()
     {
@@ -113,43 +125,10 @@ public class player implements KeyListener, Runnable{
     @Override
     public void keyPressed(KeyEvent e) 
     {
-        int key = e.getKeyCode();  
+        key = e.getKeyCode();  
         
       
-        if(id == 1)
-        {
-            if(key == KeyEvent.VK_RIGHT)
-            {
-                Deg += DegVel;             
-           
- 
-            }
-            if(key == KeyEvent.VK_LEFT)
-            {
-                Deg -= DegVel;
-
-            
-            }
-
-        }
-        
-
-        else if(id == 2)
-        {
-
-            if(key == KeyEvent.VK_D)
-            {
-                Deg += DegVel;
-            
-           
- 
-            }
-            if(key == KeyEvent.VK_A)
-            {
-                Deg -= DegVel;
-            
-            }
-        }
+       
         
         
     }
