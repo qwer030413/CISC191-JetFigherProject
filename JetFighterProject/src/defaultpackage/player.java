@@ -1,21 +1,30 @@
 package defaultpackage;
 
  
+
 import javax.swing.*;
 import java.awt.*;  
-import java.awt.event.*; 
+import java.awt.event.*;
 
 
 
-public class player implements KeyListener, Runnable{
+
+public class player implements Runnable ,KeyListener
+{
     private double x,y; 
     private int id;
     private double Deg = 0;
-    private double DegVel = 1.5;
-    private double velX = 1;
-    private double velY = 1;
+    private double DegVel1;
+    private double DegVel2;
+    private double velX = 3;
+    private double velY = 3;
+    int index = 0;
+    int key;
+    boolean left ,right, D, A;
+
+
+
     JLabel label;
-    int key = -1;
     Image image = new ImageIcon(this.getClass().getResource("/plane.jpg")).getImage();
     
 
@@ -25,6 +34,7 @@ public class player implements KeyListener, Runnable{
         this.x = x;
         this.y = y;
         this.id = id;
+        
 
     }   
     
@@ -66,7 +76,6 @@ public class player implements KeyListener, Runnable{
     {
         return velX;
     }
-   
 
    public void draw(Graphics g)
    {
@@ -76,43 +85,9 @@ public class player implements KeyListener, Runnable{
     g2D.rotate(Math.toRadians(Deg),(image.getWidth(label) / 2) + x ,(image.getHeight(label) / 2) + y);
     g2D.drawImage(image,(int)x,(int)y,null); 
     g2D.rotate(-Math.toRadians(Deg),(image.getWidth(label) / 2) + x ,(image.getHeight(label) / 2) + y);
-
    }
 
-   @Override
-   public void run() {  
-       
-       if(id == 1)
-       {
-           if(key == KeyEvent.VK_RIGHT)
-           {
-               Deg += DegVel;
-           }
-           if(key == KeyEvent.VK_LEFT)
-           {
-               Deg -= DegVel;
-           }
-       }
-       if(id == 2)
-       {
-
-           if(key == KeyEvent.VK_D)
-           {
-               Deg += DegVel;
-           }
-           if(key == KeyEvent.VK_A)
-           {
-               Deg -= DegVel;
-           }
-           try{
-               Thread.sleep(50);
-           }
-           catch(InterruptedException ie)
-           {
-               ie.printStackTrace();
-           }
-       }
-   }
+    
  
  public void goingTheSameWay()
     {
@@ -121,30 +96,82 @@ public class player implements KeyListener, Runnable{
 
     }
 
-
-    @Override
+    
+    
     public void keyPressed(KeyEvent e) 
     {
-        key = e.getKeyCode();  
+        key = e.getKeyCode();
+        if(key == KeyEvent.VK_LEFT) left = true;
+        if(key == KeyEvent.VK_RIGHT) right = true;
+        if(key == KeyEvent.VK_D) D = true;
+        if(key == KeyEvent.VK_A) A = true;
+        DegVel1 = 1;
+        DegVel2 = 1;
         
-      
-       
+
+        
         
         
     }
+    
 
     
-    @Override
     public void keyReleased(KeyEvent e) 
     {
+        key = e.getKeyCode();
+        if(key == KeyEvent.VK_LEFT)
+        {
+            left = false;
+            DegVel1 = 0;
+        } 
+        if(key == KeyEvent.VK_RIGHT) 
+        {
+            right = false;
+            DegVel1 = 0;
+        }
+        if(key == KeyEvent.VK_D) 
+        {
+            D = false;
+            DegVel2 = 0;
+        }if(key == KeyEvent.VK_A) 
+        {
+            A = false;
+            DegVel2= 0;
+        }
         
     }
+    @Override
+    public void run() {  
+        
+        
+        if(id == 1)
+        {
+            if(right)
+            {
+                Deg += DegVel1;
+            }
+            if(left)
+            {
+                Deg -= DegVel1;
+            }
+        }
+        if(id == 2)
+        {
+            if(D)
+            {
+                Deg += DegVel2;
+            }
+            if(A)
+            {
+                Deg -= DegVel2;
+            }
+        }
+    }
+
+
     @Override
     public void keyTyped(KeyEvent e) {
         
-    }
-    
+    } 
 }
-
     
-
