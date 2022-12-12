@@ -2,9 +2,11 @@ package defaultpackage;
 
  
 
+
 import javax.swing.*;
 import java.awt.*;  
 import java.awt.event.*;
+import java.util.ArrayList;
 
 
 
@@ -16,16 +18,19 @@ public class player implements Runnable ,KeyListener
     private double Deg = 0;
     private double DegVel1;
     private double DegVel2;
-    private double velX = 3;
-    private double velY = 3;
+    private double velX = 2;
+    private double velY = 2;
     int index = 0;
     int key;
-    boolean left ,right, D, A;
+    int i = 0;
+    boolean left ,right, D, A, G, shift ;
+    static ArrayList<Bullet> bullet;
 
 
 
     JLabel label;
-    Image image = new ImageIcon(this.getClass().getResource("/plane.jpg")).getImage();
+    Image plane = new ImageIcon(this.getClass().getResource("/plane.jpg")).getImage();
+
     
 
 
@@ -34,7 +39,7 @@ public class player implements Runnable ,KeyListener
         this.x = x;
         this.y = y;
         this.id = id;
-        
+        bullet = new ArrayList<Bullet>();
 
     }   
     
@@ -82,22 +87,38 @@ public class player implements Runnable ,KeyListener
     
     Graphics2D g2D = (Graphics2D) g;
     goingTheSameWay();
-    g2D.rotate(Math.toRadians(Deg),(image.getWidth(label) / 2) + x ,(image.getHeight(label) / 2) + y);
-    g2D.drawImage(image,(int)x,(int)y,null); 
-    g2D.rotate(-Math.toRadians(Deg),(image.getWidth(label) / 2) + x ,(image.getHeight(label) / 2) + y);
+    g2D.rotate(Math.toRadians(Deg),(plane.getWidth(label) / 2) + x ,(plane.getHeight(label) / 2) + y);
+    g2D.drawImage(plane,(int)x,(int)y,null); 
+    g2D.rotate(-Math.toRadians(Deg),(plane.getWidth(label) / 2) + x ,(plane.getHeight(label) / 2) + y);
+
+    for(i = 0; i < bullet.size(); i++)
+        {
+            Bullet b = bullet.get(i);  
+            b.goingTheSameWay();
+            g2D.rotate(Math.toRadians(b.getDeg()),(b.getImage().getWidth(label) / 2) + b.getX() ,(b.getImage().getHeight(label) / 2) + b.getY());
+            g2D.drawImage(b.getImage(), (int)((plane.getWidth(label) / 2) + b.getX()),(int)((plane.getHeight(label) / 2) + b.getY()),null);
+            g2D.rotate(Math.toRadians(b.getDeg()),(b.getImage().getWidth(label) / 2) + b.getX() ,(b.getImage().getHeight(label) / 2) + b.getY());
+        }
    }
 
     
  
- public void goingTheSameWay()
+    public void goingTheSameWay()
     {
         x += velX * Math.cos(Math.toRadians(Deg));
         y += velY * Math.sin(Math.toRadians(Deg));
 
     }
 
-    
-    
+    public void shoot()
+    {
+        bullet.add(new Bullet(x, y));
+    }
+
+    public static ArrayList<Bullet> getBullets()
+    {
+        return bullet;
+    }    
     public void keyPressed(KeyEvent e) 
     {
         key = e.getKeyCode();
@@ -105,6 +126,8 @@ public class player implements Runnable ,KeyListener
         if(key == KeyEvent.VK_RIGHT) right = true;
         if(key == KeyEvent.VK_D) D = true;
         if(key == KeyEvent.VK_A) A = true;
+        if(key == KeyEvent.VK_G) G = true;
+        if(key == KeyEvent.VK_SHIFT) shift = true;
         DegVel1 = 1;
         DegVel2 = 1;
         
@@ -133,11 +156,23 @@ public class player implements Runnable ,KeyListener
         {
             D = false;
             DegVel2 = 0;
-        }if(key == KeyEvent.VK_A) 
+        }
+        if(key == KeyEvent.VK_A) 
         {
             A = false;
             DegVel2= 0;
         }
+        if(key == KeyEvent.VK_G) 
+        {
+            G = false;
+           
+        }
+        if(key == KeyEvent.VK_SHIFT) 
+        {
+            shift = false;
+         
+        }
+
         
     }
     @Override
@@ -149,10 +184,17 @@ public class player implements Runnable ,KeyListener
             if(right)
             {
                 Deg += DegVel1;
+                bullet.get(i).setDeg(Deg);
+                
             }
             if(left)
             {
                 Deg -= DegVel1;
+                bullet.get(i).setDeg(Deg);
+            }
+            if(shift)
+            {
+                shoot();
             }
         }
         if(id == 2)
@@ -160,10 +202,16 @@ public class player implements Runnable ,KeyListener
             if(D)
             {
                 Deg += DegVel2;
+                bullet.get(i).setDeg(Deg);
             }
             if(A)
             {
                 Deg -= DegVel2;
+                bullet.get(i).setDeg(Deg);
+            }
+            if(G)
+            {
+                shoot();
             }
         }
     }
