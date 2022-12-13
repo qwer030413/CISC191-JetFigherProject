@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.Rectangle;
 
 public class Bullet{
-
+ 
     private double x;
     private double y;
     private double velX = 5;

@@ -1,7 +1,5 @@
 package defaultpackage;
 
- 
-
 import javax.swing.*;
 import java.awt.*;  
 import java.awt.event.*;
@@ -122,6 +120,7 @@ public class player implements Runnable ,KeyListener
         return new Rectangle((int)x,(int)y,(int)playerWidth,(int) playerHeight);
     }
 
+    
    public void draw(Graphics g)
    {
     
@@ -171,8 +170,8 @@ public class player implements Runnable ,KeyListener
         if(key == KeyEvent.VK_A) A = true;
         if(key == KeyEvent.VK_G) G = true;
         if(key == KeyEvent.VK_SHIFT) shift = true;
-        DegVel1 = 1;
-        DegVel2 = 1;
+        DegVel1 = 2;
+        DegVel2 = 2;
         
 
         
@@ -231,7 +230,7 @@ public class player implements Runnable ,KeyListener
             }
             if(left)
             {
-                Deg -= DegVel1;
+                Deg -= DegVel1; 
             }
             if(shift)
             {
