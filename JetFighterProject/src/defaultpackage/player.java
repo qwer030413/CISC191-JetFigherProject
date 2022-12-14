@@ -17,27 +17,18 @@ public class player implements Runnable ,KeyListener
     private double Deg = 0;
     private double DegVel1;
     private double DegVel2;
-    private double velX = 2;
-    private double velY = 2;
+    private double velX = 2.5;
+    private double velY = 2.5;
     private double playerWidth = 100;
     private double playerHeight = 100;
-
-    int index = 0;
-    int key;
-    int i = 0;
-    boolean left ,right, D, A, G, shift ;
-    ArrayList<Bullet> bullet;
-    Bullet b;
-    long lastAttack = 0;
-    long cooldown = 500;
-    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    
-
-
-
-
-
-
+    private int key;
+    private int i = 0;
+    private boolean left ,right, D, A, G, shift ;
+    private ArrayList<Bullet> bullet;
+    private Bullet b;
+    private long lastAttack = 0;
+    private long cooldown = 500;
+    private Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
     JLabel label;
     Image plane;
     Image newImage;
@@ -53,12 +44,15 @@ public class player implements Runnable ,KeyListener
         bullet = new ArrayList<Bullet>();
         if(id == 1)
         {
-            plane = new ImageIcon(this.getClass().getResource("/plane1.jpg")).getImage();
+        
+            plane = new ImageIcon(this.getClass().getResource("/plane1Cropped.png")).getImage();
             newImage = plane.getScaledInstance((int)playerWidth, (int)playerHeight, Image.SCALE_DEFAULT);
+            
         }
         if(id == 2)
         {
-            plane = new ImageIcon(this.getClass().getResource("/plane2.jpg")).getImage();
+            
+            plane = new ImageIcon(this.getClass().getResource("/plane2Cropped.png")).getImage();
             newImage = plane.getScaledInstance((int)playerWidth, (int)playerHeight, Image.SCALE_DEFAULT);
         }
         
@@ -74,43 +68,6 @@ public class player implements Runnable ,KeyListener
         return (newImage.getHeight(label) / 2) + y;
     }
 
-    public void setX(double x)
-    {
-        this.x = x; 
-    }
-    public void setY(double y)
-    {
-        this.y = y;
-    }
-    public void setID(int id)
-    {
-        this.id = id;
-    }
-
-    public double getX() 
-    {  
-        return x;
-    }
-    public double getY()
-    {
-        return y;
-    }
-    public int getID()
-    {
-        return id;
-    }
-    public double getDeg()
-    {
-        return Deg;
-    }
-    public double getVelY()
-    {
-        return velY;
-    } 
-    public double getVelX()
-    {
-        return velX;
-    }
     public Image getImage()
     {
         return plane;
@@ -133,6 +90,7 @@ public class player implements Runnable ,KeyListener
  
     for(i = 0; i < bullet.size(); i++)
         {
+            
             b = bullet.get(i);  
             b.goingTheSameWay();
             g2D.rotate(Math.toRadians(b.getDeg()),(newImage.getWidth(label) / 2) + b.getX() ,(newImage.getHeight(label) / 2) + b.getY());
@@ -154,6 +112,7 @@ public class player implements Runnable ,KeyListener
 
     public void shoot()
     {
+        
         bullet.add(new Bullet(x, y, Deg));
     }
 
@@ -267,9 +226,9 @@ public class player implements Runnable ,KeyListener
         }
         //y = 900, x = 1800
         if(x <= 0) x = 0;
-        if(x >= 1800) x = 1800;
+        if(x >= (int) size.getWidth() - 100) x = (int) size.getWidth() - 100;
         if(y <= 0) y = 0;
-        if(y >= 900) y = 900;
+        if(y >= (int) size.getHeight()- 150) y = (int) size.getHeight()- 150;
     }
 
 

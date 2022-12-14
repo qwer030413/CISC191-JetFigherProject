@@ -10,12 +10,14 @@ public class Bullet{
     private double velX = 5;
     private double velY = 5;
     private double Deg =0;
-    private double bulletWidth = 50;
-    private double bulletHeight = 30;
+    private double bulletWidth = 80;
+    private double bulletHeight = 48;
     
-    Image bullet = new ImageIcon(this.getClass().getResource("/bullet.jpg")).getImage();
-    Image newImage = bullet.getScaledInstance((int) bulletWidth, (int)bulletHeight, Image.SCALE_DEFAULT);
+    Image bullet = new ImageIcon(this.getClass().getResource("/Bullet.png")).getImage();
+  
 
+
+    Image newImage =bullet.getScaledInstance((int) bulletWidth, (int)bulletHeight, Image.SCALE_DEFAULT);
     
     JLabel label;
     public Bullet(double x, double y, double Deg)
@@ -36,8 +38,6 @@ public class Bullet{
         y += velY * Math.sin(Math.toRadians(Deg));
 
     }
-
-
     public double getMidX()
     {
         return (newImage.getWidth(label) / 2) + x;
@@ -54,14 +54,6 @@ public class Bullet{
     {
         return y;
     }
-    public void setX(double x)
-    {
-        this.x = x;
-    }
-    public void setY(double y)
-    {
-        this.y = y;
-    }
     public Image getImage()
     {
         return newImage;  
@@ -69,18 +61,6 @@ public class Bullet{
     public double getDeg()
     {
         return Deg;
-    }
-    public void setDeg(double d)
-    {
-        Deg = d;
-    }
-    public double getVelX()
-    {
-        return velX;
-    }
-    public double getVelY()
-    {
-        return velY;
     }
     public Rectangle getBounds()
     {
