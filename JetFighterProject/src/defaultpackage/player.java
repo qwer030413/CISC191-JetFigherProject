@@ -24,7 +24,7 @@ public class player implements Runnable ,KeyListener
     private int key;
     private int i = 0;
     private boolean left ,right, D, A, G, shift ;
-    private ArrayList<Bullet> bullet;
+    private ArrayList<Bullet> bullet = new ArrayList<Bullet>();
     private Bullet b;
     private long lastAttack = 0;
     private long cooldown = 500;
@@ -41,7 +41,6 @@ public class player implements Runnable ,KeyListener
         this.x = x;
         this.y = y;
         this.id = id;
-        bullet = new ArrayList<Bullet>();
         if(id == 1)
         {
         
