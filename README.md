@@ -1,1 +1,1 @@
-# CISC191-JetFigherProject
+# JetFigherProject
