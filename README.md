@@ -1,4 +1,4 @@
-# JetFigherProject
+# Jet Fighter Project
 2 player jet fighter project!  
 Player 1: WASD to move, G to fire  
 Player 2: Arrow keys to move, R SHIFT to fire  
